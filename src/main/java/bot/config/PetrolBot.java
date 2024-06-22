@@ -42,27 +42,6 @@ public class PetrolBot implements SpringLongPollingBot, LongPollingSingleThreadU
                     .orElseThrow(() -> new IllegalArgumentException("Chat bot command not found"));
 
             command.execute(telegramClient, chatId);
-
-//            SendMessage message = SendMessage
-//                    .builder()
-//                    .chatId(chatId)
-//                    .text(messageText)
-//                    .build();
-
-//            InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-//            List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-//            List<InlineKeyboardButton> rowInline = new ArrayList<>();
-//            rowInline.add(new InlineKeyboardButton().setText("Update message text").setCallbackData("update_msg_text"));
-//            // Set the keyboard to the markup
-//            rowsInline.add(rowInline);
-//            // Add it to the message
-//            markupInline.setKeyboard(rowsInline);
-
-//            try {
-//                telegramClient.execute(message);
-//            } catch (TelegramApiException e) {
-//                log.error("Failed to send message to chat ID {}: {}", chatId, messageText, e);
-//            }
         }
     }
 

@@ -16,21 +16,24 @@ public class StartCommand extends ChatBotBase implements Command {
 
     @Override
     public void execute(TelegramClient telegramClient, long chatId) {
-
-//        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
         List<InlineKeyboardRow> rowsInline = new ArrayList<>();
 
-        InlineKeyboardButton inlineKeyboardButton1 = InlineKeyboardButton.builder()
-                .text("Latvia")
+        InlineKeyboardButton latviaButton = InlineKeyboardButton.builder()
+                .text("\uD83C\uDDF1\uD83C\uDDFB Latvia")
                 .callbackData("callback_latvia")
                 .build();
 
-        InlineKeyboardButton inlineKeyboardButton2 = InlineKeyboardButton.builder()
-                .text("Lithuania")
+        InlineKeyboardButton lithuaniaButton = InlineKeyboardButton.builder()
+                .text("\uD83C\uDDF1\uD83C\uDDF9 Lithuania")
                 .callbackData("callback_lithuania")
                 .build();
 
-        rowsInline.add(new InlineKeyboardRow(inlineKeyboardButton1, inlineKeyboardButton2));
+        InlineKeyboardButton swedenButton = InlineKeyboardButton.builder()
+                .text("\uD83C\uDDF8\uD83C\uDDEA Sweden")
+                .callbackData("callback_sweden")
+                .build();
+
+        rowsInline.add(new InlineKeyboardRow(latviaButton, lithuaniaButton, swedenButton));
 
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup(rowsInline);
         markupInline.setKeyboard(rowsInline);

@@ -11,23 +11,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class StartCommand extends ChatBotBase implements Command {
-    private static final String command = "/start";
+public class LatviaCommand extends ChatBotBase implements Command {
+    private static final String command = "callback_latvia";
 
     @Override
     public void execute(TelegramClient telegramClient, long chatId) {
         List<InlineKeyboardRow> rowsInline = new ArrayList<>();
 
-        InlineKeyboardButton latviaButton = createChatBotButton("\uD83C\uDDF1\uD83C\uDDFB Latvia", "callback_latvia");
-        InlineKeyboardButton lithuaniaButton = createChatBotButton("\uD83C\uDDF1\uD83C\uDDF9 Lithuania", "callback_lithuania");
-        InlineKeyboardButton swedenButton = createChatBotButton("\uD83C\uDDF8\uD83C\uDDEA Sweden", "callback_sweden");
+        InlineKeyboardButton circleButton = createChatBotButton("CircleK", "callback_circle_k");
+        InlineKeyboardButton nesteButton = createChatBotButton("Neste", "callback_neste");
+        InlineKeyboardButton gotikaButton = createChatBotButton("Gotika", "callback_gotika");
+        InlineKeyboardButton viadaButton = createChatBotButton("Viada", "callback_viada");
+        InlineKeyboardButton virshiButton = createChatBotButton("Virshi", "callback_virshi");
+        InlineKeyboardButton backButton = createChatBotButton("⬅\uFE0F Back", "callback_back");
 
-        rowsInline.add(new InlineKeyboardRow(latviaButton, lithuaniaButton, swedenButton));
+        rowsInline.add(new InlineKeyboardRow(circleButton, nesteButton, gotikaButton));
+        rowsInline.add(new InlineKeyboardRow(viadaButton, virshiButton, backButton));
 
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup(rowsInline);
         markupInline.setKeyboard(rowsInline);
 
-        SendMessage message = createSendMessage(chatId, "Welcome");
+        SendMessage message = createSendMessage(chatId, "Latvian Petrol Stations");
         message.setReplyMarkup(markupInline);
 
         sendMessage(telegramClient, message);

@@ -1,7 +1,9 @@
 package bot.config;
 
+import bot.command.ChatBotBase;
 import bot.command.Command;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -16,12 +18,13 @@ import org.telegram.telegrambots.meta.generics.TelegramClient;
 
 import java.util.List;
 
-@Slf4j
 @Component
-public class PetrolBot implements SpringLongPollingBot, LongPollingSingleThreadUpdateConsumer {
+public class PetrolBot extends ChatBotBase implements SpringLongPollingBot, LongPollingSingleThreadUpdateConsumer {
+    private static final Logger log = LoggerFactory.getLogger(PetrolBot.class);
     private final String token;
-    private final TelegramClient telegramClient;
     private final List<Command> botCommands;
+    public static TelegramClient telegramClient = null;
+    public static long chatId;
 
     public PetrolBot(@Value("${bot.token}") final String token,
                      @Autowired final List<Command> botCommands) {
@@ -36,10 +39,16 @@ public class PetrolBot implements SpringLongPollingBot, LongPollingSingleThreadU
             String messageText = update.getMessage().getText();
             long chatId = update.getMessage().getChatId();
 
-            Command command = botCommands.stream()
-                    .filter(c -> c.getCommand().contains(messageText))
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("Chat bot command not found"));
+            Command command = findCommand(botCommands, messageText);
+
+            PetrolBot.chatId = chatId;
+            command.execute(telegramClient, chatId);
+        }
+        if (update.hasCallbackQuery()) {
+            String callData = update.getCallbackQuery().getData();
+            long chatId = update.getCallbackQuery().getMessage().getChatId();
+
+            Command command = findCommand(botCommands, callData);
 
             command.execute(telegramClient, chatId);
         }

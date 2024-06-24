@@ -1,23 +1,33 @@
 package bot.command;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public abstract class ChatBotBase {
     private static final String ERROR_MESSAGE = "Chat bot command not found";
-    private static final Logger log = LoggerFactory.getLogger(ChatBotBase.class);
 
     protected SendMessage createSendMessage(long chatId, String messageText) {
         return SendMessage
                 .builder()
                 .chatId(chatId)
                 .text(messageText)
+                .build();
+    }
+
+    protected SendMessage createErrorMessage(long chatId) {
+        return SendMessage
+                .builder()
+                .chatId(chatId)
+                .text("Request failed ❌ Try again later")
                 .build();
     }
 
@@ -41,5 +51,14 @@ public abstract class ChatBotBase {
                 .filter(c -> c.getCommand().contains(commandName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE));
+    }
+
+    protected void addBackCommand(InlineKeyboardButton backButton, SendMessage message) {
+        List<InlineKeyboardRow> rowsInline = new ArrayList<>();
+        rowsInline.add(new InlineKeyboardRow(backButton));
+
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup(rowsInline);
+        markupInline.setKeyboard(rowsInline);
+        message.setReplyMarkup(markupInline);
     }
 }

@@ -1,4 +1,10 @@
+spring:
+  threads:
+    virtual:
+      enabled: true
 bot:
   name: Baltic Petrol
   username: baltic_petrol_bot
   token: {BOT_TOKEN}
+bpp:
+  baseurl: http://192.168.0.55:9000

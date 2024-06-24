@@ -18,7 +18,7 @@ public class BackCommand extends ChatBotBase implements Command {
     @Override
     public void execute(TelegramClient telegramClient, long chatId) {
         Command command = findCommand(botCommands, "/start");
-        command.execute(PetrolBot.telegramClient, PetrolBot.chatId);
+        command.execute(PetrolBot.telegramClient, PetrolBot.getChatId());
     }
 
     @Override

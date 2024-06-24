@@ -11,27 +11,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class LatviaCommand extends ChatBotBase implements Command {
-    private static final String command = "callback_lv";
+public class LithuaniaCommand extends ChatBotBase implements Command {
+    private static final String command = "callback_lt";
 
     @Override
     public void execute(TelegramClient telegramClient, long chatId) {
         List<InlineKeyboardRow> rowsInline = new ArrayList<>();
 
-        InlineKeyboardButton circleButton = createChatBotButton("⛽ CircleK", "callback_circle_lv");
-        InlineKeyboardButton nesteButton = createChatBotButton("⛽ Neste", "callback_neste");
-        InlineKeyboardButton gotikaButton = createChatBotButton("⛽ Gotika", "callback_gotika");
-        InlineKeyboardButton viadaButton = createChatBotButton("⛽ Viada", "callback_viada");
-        InlineKeyboardButton virshiButton = createChatBotButton("⛽ Virshi", "callback_virshi");
+        InlineKeyboardButton circleButton = createChatBotButton("⛽ CircleK", "callback_circle_lt");
         InlineKeyboardButton backButton = createChatBotButton("⬅ Back", "callback_back");
 
-        rowsInline.add(new InlineKeyboardRow(circleButton, nesteButton, gotikaButton));
-        rowsInline.add(new InlineKeyboardRow(viadaButton, virshiButton, backButton));
+        rowsInline.add(new InlineKeyboardRow(circleButton));
+        rowsInline.add(new InlineKeyboardRow(backButton));
 
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup(rowsInline);
         markupInline.setKeyboard(rowsInline);
 
-        SendMessage message = createSendMessage(chatId, "Latvian Petrol Stations");
+        SendMessage message = createSendMessage(chatId, "Lithuanian Petrol Stations");
         message.setReplyMarkup(markupInline);
 
         sendMessage(telegramClient, message);
